@@ -6,7 +6,7 @@ activityLabel <- read.table("activity_labels.txt",col.names = c("label","activit
 # Read features file and the measure names
 features <- read.table("features.txt",col.names = c("id", "feature"))
 
-# Select only desirable measures mapping ther indexes (desirable measures have "mean()" or  "std()" in the name)
+# Select only desirable measures mapping their indexes (desirable measures have "mean()" or  "std()" in the name)
 desirableMeasurements <- grep( "(.*)+mean()+(.*)|(.*)+std()+(.*)", features$feature)
 
 # Read the collected data from test and train datasets
@@ -56,9 +56,6 @@ Data2$subject <- rbind(testSubj,traintSubj)
 
 avgData <- aggregate(Data2, by=list(Data2$activityname,Data2$subject$V1),FUN = mean)
 
-# Just changing the column names for a better understanding
-colnames(avgData) <- c("activity", "subject")
-
 
 # Write the dataset to a file
-write.table(avgData, "AnalysisResult.txt", sep="\t")
+write.table(format(avgData,scientific=T),"AnalysisResult2.txt", row.names=F, col.names=F, quote=2)
